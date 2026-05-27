@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="200" height="320">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8B0000"/>
+      <stop offset="50%" stop-color="#DC143C"/>
+      <stop offset="100%" stop-color="#FF6347"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d4af37"/>
+      <stop offset="50%" stop-color="#f5d77a"/>
+      <stop offset="100%" stop-color="#d4af37"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- 背景 -->
+  <rect width="200" height="320" rx="12" fill="url(#bg)"/>
+  <!-- 外边框 -->
+  <rect x="4" y="4" width="192" height="312" rx="10" fill="none" stroke="url(#gold)" stroke-width="2"/>
+  <!-- 内边框 -->
+  <rect x="10" y="10" width="180" height="300" rx="7" fill="none" stroke="url(#gold)" stroke-width="0.8" opacity="0.5"/>
+  <!-- 角落装饰 -->
+  <path d="M18,18 L32,18 M18,18 L18,32" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M182,18 L168,18 M182,18 L182,32" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M18,302 L32,302 M18,302 L18,288" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M182,302 L168,302 M182,302 L182,288" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  
+  
+  <text x="100.0" y="32" text-anchor="middle" fill="#d4af37" font-size="13" font-family="serif" font-weight="bold" filter="url(#glow)">魔术师</text>
+  <!-- 魔法阵 -->
+  <circle cx="100.0" cy="110" r="40" fill="none" stroke="#FFD700" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="100.0" cy="110" r="30" fill="none" stroke="#FF6347" stroke-width="1" opacity="0.5"/>
+  <!-- 无限符号 -->
+  <path d="M75,80 Q85,65 100,80 Q115,95 125,80" stroke="#FFD700" stroke-width="2.5" fill="none" filter="url(#glow)"/>
+  <path d="M75,80 Q85,95 100,80 Q115,65 125,80" stroke="#FFD700" stroke-width="2.5" fill="none"/>
+  <!-- 权杖 -->
+  <line x1="100.0" y1="70" x2="100.0" y2="155" stroke="#d4af37" stroke-width="3"/>
+  <circle cx="100.0" cy="68" r="5" fill="#FFD700" filter="url(#glow)"/>
+  <!-- 四元素 -->
+  <text x="55" y="150" fill="#FF4500" font-size="14" opacity="0.8">🔥</text>
+  <text x="135" y="150" fill="#4169E1" font-size="14" opacity="0.8">💧</text>
+  <text x="55" y="175" fill="#32CD32" font-size="14" opacity="0.8">🌿</text>
+  <text x="135" y="175" fill="#87CEEB" font-size="14" opacity="0.8">💨</text>
+  <!-- 桌子 -->
+  <rect x="60" y="155" width="80" height="8" rx="2" fill="#8B4513" opacity="0.8"/>
+  
+  <!-- 底部标签 -->
+  <rect x="0" y="260" width="200" height="60" rx="0" fill="rgba(0,0,0,0.5)"/>
+  <rect x="10" y="262" width="180" height="56" rx="5" fill="rgba(0,0,0,0.3)"/>
+  <text x="100.0" y="282" text-anchor="middle" fill="#d4af37" font-size="11" font-family="serif" font-weight="bold">No.01 · 大阿卡纳</text>
+  <text x="100.0" y="300" text-anchor="middle" fill="#f5d77a" font-size="14" font-family="serif" font-weight="bold">魔术师 · The Magician</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="200" height="320">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#000033"/>
+      <stop offset="50%" stop-color="#000066"/>
+      <stop offset="100%" stop-color="#000099"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d4af37"/>
+      <stop offset="50%" stop-color="#f5d77a"/>
+      <stop offset="100%" stop-color="#d4af37"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- 背景 -->
+  <rect width="200" height="320" rx="12" fill="url(#bg)"/>
+  <!-- 外边框 -->
+  <rect x="4" y="4" width="192" height="312" rx="10" fill="none" stroke="url(#gold)" stroke-width="2"/>
+  <!-- 内边框 -->
+  <rect x="10" y="10" width="180" height="300" rx="7" fill="none" stroke="url(#gold)" stroke-width="0.8" opacity="0.5"/>
+  <!-- 角落装饰 -->
+  <path d="M18,18 L32,18 M18,18 L18,32" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M182,18 L168,18 M182,18 L182,32" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M18,302 L32,302 M18,302 L18,288" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M182,302 L168,302 M182,302 L182,288" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  
+  
+  <text x="100.0" y="32" text-anchor="middle" fill="#d4af37" font-size="13" font-family="serif" font-weight="bold" filter="url(#glow)">星星</text>
+  <!-- 大星 -->
+  <polygon points="100.0,60 105.0,75 118.0,75 108.0,85 112.0,100 100.0,90 88.0,100 92.0,85 82.0,75 95.0,75" fill="#FFD700" filter="url(#glow)"/>
+  <!-- 小星 -->
+  <text x="45" y="70" fill="#FFD700" font-size="8" opacity="0.8">✦</text>
+  <text x="155" y="65" fill="#FFD700" font-size="6" opacity="0.7">✦</text>
+  <text x="60" y="100" fill="#FFD700" font-size="5" opacity="0.5">✦</text>
+  <text x="140" y="95" fill="#FFD700" font-size="7" opacity="0.6">✦</text>
+  <text x="80" y="55" fill="#FFD700" font-size="4" opacity="0.4">✦</text>
+  <text x="120" y="50" fill="#FFD700" font-size="5" opacity="0.3">✦</text>
+  <!-- 女子 -->
+  <circle cx="80" cy="140" r="8" fill="#FFDAB9" opacity="0.7"/>
+  <line x1="80" y1="148" x2="80" y2="185" stroke="#87CEEB" stroke-width="2" opacity="0.6"/>
+  <!-- 水罐 -->
+  <path d="M60,155 L55,180 L75,180 L70,155 Z" fill="none" stroke="#87CEEB" stroke-width="1.5" opacity="0.6"/>
+  <!-- 水流 -->
+  <path d="M60,180 Q50,195 55,210" stroke="#00CED1" stroke-width="2" fill="none" opacity="0.5"/>
+  <path d="M65,180 Q55,200 60,215" stroke="#00CED1" stroke-width="1.5" fill="none" opacity="0.4"/>
+  <!-- 池塘 -->
+  <ellipse cx="58" cy="210" rx="15" ry="5" fill="#00CED1" opacity="0.3"/>
+  <!-- 鸟 -->
+  <path d="M130,150 Q135,145 140,150" stroke="#C0C0C0" stroke-width="1.5" fill="none" opacity="0.5"/>
+  
+  <!-- 底部标签 -->
+  <rect x="0" y="260" width="200" height="60" rx="0" fill="rgba(0,0,0,0.5)"/>
+  <rect x="10" y="262" width="180" height="56" rx="5" fill="rgba(0,0,0,0.3)"/>
+  <text x="100.0" y="282" text-anchor="middle" fill="#d4af37" font-size="11" font-family="serif" font-weight="bold">No.17 · 大阿卡纳</text>
+  <text x="100.0" y="300" text-anchor="middle" fill="#f5d77a" font-size="14" font-family="serif" font-weight="bold">星星 · The Star</text>
+</svg>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="200" height="320">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFB6C1"/>
+      <stop offset="50%" stop-color="#FF69B4"/>
+      <stop offset="100%" stop-color="#FF1493"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d4af37"/>
+      <stop offset="50%" stop-color="#f5d77a"/>
+      <stop offset="100%" stop-color="#d4af37"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- 背景 -->
+  <rect width="200" height="320" rx="12" fill="url(#bg)"/>
+  <!-- 外边框 -->
+  <rect x="4" y="4" width="192" height="312" rx="10" fill="none" stroke="url(#gold)" stroke-width="2"/>
+  <!-- 内边框 -->
+  <rect x="10" y="10" width="180" height="300" rx="7" fill="none" stroke="url(#gold)" stroke-width="0.8" opacity="0.5"/>
+  <!-- 角落装饰 -->
+  <path d="M18,18 L32,18 M18,18 L18,32" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M182,18 L168,18 M182,18 L182,32" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M18,302 L32,302 M18,302 L18,288" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M182,302 L168,302 M182,302 L182,288" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  
+  
+  <text x="100.0" y="32" text-anchor="middle" fill="#d4af37" font-size="13" font-family="serif" font-weight="bold" filter="url(#glow)">恋人</text>
+  <!-- 天使 -->
+  <circle cx="100.0" cy="75" r="8" fill="#FFB6C1" opacity="0.8"/>
+  <path d="M80.0,80 Q70.0,60 85.0,55" stroke="#FFB6C1" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <path d="M120.0,80 Q130.0,60 115.0,55" stroke="#FFB6C1" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <!-- 两棵树 -->
+  <rect x="45" y="110" width="8" height="80" fill="#228B22" opacity="0.6"/>
+  <circle cx="49" cy="100" r="18" fill="#32CD32" opacity="0.5"/>
+  <rect x="147" y="110" width="8" height="80" fill="#8B0000" opacity="0.6"/>
+  <circle cx="151" cy="100" r="18" fill="#FF4500" opacity="0.4"/>
+  <!-- 火焰(知识树) -->
+  <text x="145" y="95" fill="#FF4500" font-size="10" opacity="0.7">🔥</text>
+  <!-- 心形 -->
+  <path d="M100.0,120 Q80.0,100 100.0,115 Q120.0,100 100.0,120" fill="#FF1493" opacity="0.8" filter="url(#glow)"/>
+  <!-- 太阳光线 -->
+  <line x1="100.0" y1="50" x2="100.0" y2="35" stroke="#FFD700" stroke-width="1.5" opacity="0.6"/>
+  <line x1="85.0" y1="55" x2="75.0" y2="42" stroke="#FFD700" stroke-width="1" opacity="0.4"/>
+  <line x1="115.0" y1="55" x2="125.0" y2="42" stroke="#FFD700" stroke-width="1" opacity="0.4"/>
+  <!-- 山 -->
+  <polygon points="30,200 100,155 170,200" fill="#FF69B4" opacity="0.2"/>
+  
+  <!-- 底部标签 -->
+  <rect x="0" y="260" width="200" height="60" rx="0" fill="rgba(0,0,0,0.5)"/>
+  <rect x="10" y="262" width="180" height="56" rx="5" fill="rgba(0,0,0,0.3)"/>
+  <text x="100.0" y="282" text-anchor="middle" fill="#d4af37" font-size="11" font-family="serif" font-weight="bold">No.06 · 大阿卡纳</text>
+  <text x="100.0" y="300" text-anchor="middle" fill="#f5d77a" font-size="14" font-family="serif" font-weight="bold">恋人 · The Lovers</text>
+</svg>

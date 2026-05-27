@@ -332,8 +332,8 @@
         gameState.flippedCount = 0;
 
         gameState.drawnCards.forEach((card, index) => {
-            const symbol = cardSymbols[card.id] || '✦';
             const posText = card.position === 'upright' ? '正位' : '逆位';
+            const imgPath = card.image || `/static/images/major_arcana/${String(card.id).padStart(2,'0')}.svg`;
 
             const cardHTML = `
                 <div class="card" onclick="flipCard(${index})">
@@ -347,15 +347,10 @@
                             <div class="card-back-corner bottom-right"></div>
                             <div class="card-back-symbol">✦</div>
                         </div>
-                        <!-- 牌正面(独特设计) -->
-                        <div class="card-front">
-                            <div class="card-number-bar">No.${card.id} · 大阿卡纳</div>
-                            <div class="card-art card-art-${card.id}">
-                                <div class="card-symbol">${symbol}</div>
-                            </div>
-                            <div class="card-info">
-                                <div class="card-name">${card.name_cn}</div>
-                                <div class="card-name-en">${card.name_en}</div>
+                        <!-- 牌正面(图片设计) -->
+                        <div class="card-front card-front-img">
+                            <img src="${imgPath}" alt="${card.name_cn}" class="card-image" />
+                            <div class="card-overlay-info">
                                 <div class="card-position ${card.position}">${posText}</div>
                                 <div class="card-keywords">${card.keywords.join(' · ')}</div>
                             </div>
@@ -519,12 +514,12 @@
 
         gameState.drawnCards.forEach(card => {
             const posText = card.position === 'upright' ? '正位' : '逆位';
-            const symbol = cardSymbols[card.id] || '✦';
+            const imgPath = card.image || `/static/images/major_arcana/${String(card.id).padStart(2,'0')}.svg`;
 
             resultCards.innerHTML += `
                 <div class="result-card">
-                    <div class="result-card-face">
-                        <div class="result-card-symbol">${symbol}</div>
+                    <div class="result-card-face result-card-img">
+                        <img src="${imgPath}" alt="${card.name_cn}" class="result-card-image" />
                         <div class="result-card-name">${card.name_cn}</div>
                         <div class="result-card-position ${card.position}">${posText}</div>
                     </div>

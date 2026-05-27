@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="200" height="320">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2F4F4F"/>
+      <stop offset="50%" stop-color="#696969"/>
+      <stop offset="100%" stop-color="#A9A9A9"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d4af37"/>
+      <stop offset="50%" stop-color="#f5d77a"/>
+      <stop offset="100%" stop-color="#d4af37"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- 背景 -->
+  <rect width="200" height="320" rx="12" fill="url(#bg)"/>
+  <!-- 外边框 -->
+  <rect x="4" y="4" width="192" height="312" rx="10" fill="none" stroke="url(#gold)" stroke-width="2"/>
+  <!-- 内边框 -->
+  <rect x="10" y="10" width="180" height="300" rx="7" fill="none" stroke="url(#gold)" stroke-width="0.8" opacity="0.5"/>
+  <!-- 角落装饰 -->
+  <path d="M18,18 L32,18 M18,18 L18,32" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M182,18 L168,18 M182,18 L182,32" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M18,302 L32,302 M18,302 L18,288" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M182,302 L168,302 M182,302 L182,288" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  
+  
+  <text x="100.0" y="32" text-anchor="middle" fill="#d4af37" font-size="13" font-family="serif" font-weight="bold" filter="url(#glow)">隐士</text>
+  <!-- 灯笼 -->
+  <circle cx="100.0" cy="80" r="12" fill="#FFD700" opacity="0.8" filter="url(#softglow)"/>
+  <circle cx="100.0" cy="80" r="8" fill="#FFF8DC"/>
+  <rect x="98.0" y="72" width="4" height="3" fill="#d4af37"/>
+  <!-- 灯笼架 -->
+  <line x1="100.0" y1="68" x2="100.0" y2="60" stroke="#d4af37" stroke-width="1.5"/>
+  <line x1="92.0" y1="60" x2="108.0" y2="60" stroke="#d4af37" stroke-width="2"/>
+  <!-- 隐士身形 -->
+  <path d="M100.0,95 L100.0,170" stroke="#696969" stroke-width="3" fill="none"/>
+  <path d="M85.0,120 L100.0,105 L115.0,120" stroke="#696969" stroke-width="2" fill="#808080" opacity="0.5"/>
+  <!-- 杖 -->
+  <line x1="115.0" y1="100" x2="115.0" y2="185" stroke="#8B8682" stroke-width="2.5"/>
+  <!-- 雪山 -->
+  <polygon points="30,200 60,140 90,200" fill="#A9A9A9" opacity="0.4"/>
+  <polygon points="110,200 140,130 170,200" fill="#808080" opacity="0.4"/>
+  <polygon points="60,200 100,120 140,200" fill="#696969" opacity="0.3"/>
+  <!-- 雪 -->
+  <text x="55" y="145" fill="#C0C0C0" font-size="6" opacity="0.5">❄</text>
+  <text x="140" y="140" fill="#C0C0C0" font-size="5" opacity="0.4">❄</text>
+  
+  <!-- 底部标签 -->
+  <rect x="0" y="260" width="200" height="60" rx="0" fill="rgba(0,0,0,0.5)"/>
+  <rect x="10" y="262" width="180" height="56" rx="5" fill="rgba(0,0,0,0.3)"/>
+  <text x="100.0" y="282" text-anchor="middle" fill="#d4af37" font-size="11" font-family="serif" font-weight="bold">No.09 · 大阿卡纳</text>
+  <text x="100.0" y="300" text-anchor="middle" fill="#f5d77a" font-size="14" font-family="serif" font-weight="bold">隐士 · The Hermit</text>
+</svg>

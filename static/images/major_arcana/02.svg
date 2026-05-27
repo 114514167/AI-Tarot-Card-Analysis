@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="200" height="320">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#191970"/>
+      <stop offset="50%" stop-color="#4169E1"/>
+      <stop offset="100%" stop-color="#87CEEB"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d4af37"/>
+      <stop offset="50%" stop-color="#f5d77a"/>
+      <stop offset="100%" stop-color="#d4af37"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- 背景 -->
+  <rect width="200" height="320" rx="12" fill="url(#bg)"/>
+  <!-- 外边框 -->
+  <rect x="4" y="4" width="192" height="312" rx="10" fill="none" stroke="url(#gold)" stroke-width="2"/>
+  <!-- 内边框 -->
+  <rect x="10" y="10" width="180" height="300" rx="7" fill="none" stroke="url(#gold)" stroke-width="0.8" opacity="0.5"/>
+  <!-- 角落装饰 -->
+  <path d="M18,18 L32,18 M18,18 L18,32" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M182,18 L168,18 M182,18 L182,32" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M18,302 L32,302 M18,302 L18,288" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M182,302 L168,302 M182,302 L182,288" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  
+  
+  <text x="100.0" y="32" text-anchor="middle" fill="#d4af37" font-size="13" font-family="serif" font-weight="bold" filter="url(#glow)">女祭司</text>
+  <!-- 月亮 -->
+  <circle cx="100.0" cy="85" r="25" fill="none" stroke="#C0C0C0" stroke-width="1.5" opacity="0.7"/>
+  <circle cx="108.0" cy="80" r="22" fill="#191970" opacity="0.8"/>
+  <!-- 柱子 -->
+  <rect x="40" y="100" width="12" height="100" fill="#4169E1" opacity="0.5" rx="2"/>
+  <rect x="148" y="100" width="12" height="100" fill="#4169E1" opacity="0.5" rx="2"/>
+  <text x="46" y="115" fill="#C0C0C0" font-size="9" font-family="serif">B</text>
+  <text x="154" y="115" fill="#C0C0C0" font-size="9" font-family="serif">J</text>
+  <!-- 帘幕 -->
+  <path d="M52,100 Q100.0,130 148,100" stroke="#6A5ACD" stroke-width="1" fill="none" opacity="0.6"/>
+  <!-- 水 -->
+  <path d="M60,180 Q80,170 100,180 Q120,190 140,180" stroke="#00CED1" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <path d="M55,190 Q80,180 100,190 Q120,200 145,190" stroke="#00CED1" stroke-width="1" fill="none" opacity="0.4"/>
+  <!-- 卷轴 -->
+  <rect x="82" y="130" width="36" height="25" rx="3" fill="#E6E6FA" opacity="0.7"/>
+  <text x="100.0" y="147" text-anchor="middle" fill="#191970" font-size="8" font-family="serif">TORA</text>
+  <!-- 星星 -->
+  <text x="100" y="65" fill="#C0C0C0" font-size="8" opacity="0.6">✦</text>
+  
+  <!-- 底部标签 -->
+  <rect x="0" y="260" width="200" height="60" rx="0" fill="rgba(0,0,0,0.5)"/>
+  <rect x="10" y="262" width="180" height="56" rx="5" fill="rgba(0,0,0,0.3)"/>
+  <text x="100.0" y="282" text-anchor="middle" fill="#d4af37" font-size="11" font-family="serif" font-weight="bold">No.02 · 大阿卡纳</text>
+  <text x="100.0" y="300" text-anchor="middle" fill="#f5d77a" font-size="14" font-family="serif" font-weight="bold">女祭司 · The High Priestess</text>
+</svg>

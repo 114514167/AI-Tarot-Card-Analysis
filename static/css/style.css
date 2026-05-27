@@ -454,6 +454,88 @@ body {
 }
 
 /* ============================================================
+   图片版卡牌正面样式
+   ============================================================ */
+.card-front-img {
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    background: #0a0015;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.card-overlay-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px 6px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.85));
+    text-align: center;
+}
+
+.card-overlay-info .card-position {
+    font-size: 0.75em;
+    padding: 2px 8px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-bottom: 3px;
+}
+
+.card-overlay-info .card-keywords {
+    font-size: 0.65em;
+    color: #b8a070;
+    line-height: 1.3;
+}
+
+/* 结果页面图片版小牌面 */
+.result-card-img {
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    flex-direction: column;
+    background: #0a0015;
+}
+
+.result-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.result-card-img .result-card-name {
+    position: absolute;
+    bottom: 22px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.8em;
+    color: #d4af37;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    z-index: 1;
+}
+
+.result-card-img .result-card-position {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.6em;
+    z-index: 1;
+}
+
+/* ============================================================
    22张大阿卡纳卡面设计
    每张牌有独特的背景色和装饰
    ============================================================ */

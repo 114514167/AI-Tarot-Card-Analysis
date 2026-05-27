@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320" width="200" height="320">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FF4500"/>
+      <stop offset="50%" stop-color="#FF6347"/>
+      <stop offset="100%" stop-color="#FF7F50"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d4af37"/>
+      <stop offset="50%" stop-color="#f5d77a"/>
+      <stop offset="100%" stop-color="#d4af37"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- 背景 -->
+  <rect width="200" height="320" rx="12" fill="url(#bg)"/>
+  <!-- 外边框 -->
+  <rect x="4" y="4" width="192" height="312" rx="10" fill="none" stroke="url(#gold)" stroke-width="2"/>
+  <!-- 内边框 -->
+  <rect x="10" y="10" width="180" height="300" rx="7" fill="none" stroke="url(#gold)" stroke-width="0.8" opacity="0.5"/>
+  <!-- 角落装饰 -->
+  <path d="M18,18 L32,18 M18,18 L18,32" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M182,18 L168,18 M182,18 L182,32" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M18,302 L32,302 M18,302 L18,288" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  <path d="M182,302 L168,302 M182,302 L182,288" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+  
+  
+  <text x="100.0" y="32" text-anchor="middle" fill="#d4af37" font-size="13" font-family="serif" font-weight="bold" filter="url(#glow)">塔</text>
+  <!-- 塔 -->
+  <rect x="70" y="80" width="60" height="120" fill="#8B4513" opacity="0.7"/>
+  <rect x="75" y="75" width="50" height="15" fill="#A0522D" opacity="0.8"/>
+  <!-- 塔顶 -->
+  <rect x="80" y="65" width="40" height="15" fill="#654321" opacity="0.8"/>
+  <!-- 窗户 -->
+  <rect x="90" y="100" width="20" height="25" fill="#000" opacity="0.6" rx="10"/>
+  <rect x="90" y="140" width="20" height="20" fill="#000" opacity="0.6" rx="2"/>
+  <!-- 闪电 -->
+  <path d="M100.0,40 L95,75 L105,70 L90,100" stroke="#FFD700" stroke-width="3" fill="none" filter="url(#glow)"/>
+  <polygon points="100,40 90,65 100,60 85,90" fill="#FFD700" opacity="0.8"/>
+  <!-- 火焰 -->
+  <circle cx="85" cy="85" r="8" fill="#FF4500" opacity="0.6"/>
+  <circle cx="115" cy="88" r="6" fill="#FF6347" opacity="0.5"/>
+  <circle cx="100" cy="80" r="5" fill="#FFD700" opacity="0.4"/>
+  <!-- 坠落的人 -->
+  <circle cx="60" cy="130" r="4" fill="#FFDAB9" opacity="0.6"/>
+  <line x1="60" y1="134" x2="55" y2="155" stroke="#5F9EA0" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="140" cy="125" r="4" fill="#FFDAB9" opacity="0.6"/>
+  <line x1="140" y1="129" x2="145" y2="150" stroke="#5F9EA0" stroke-width="1.5" opacity="0.5"/>
+  <!-- 碎片 -->
+  <rect x="50" y="170" width="8" height="5" fill="#8B4513" opacity="0.5" transform="rotate(15,54,172)"/>
+  <rect x="140" y="175" width="6" height="4" fill="#A0522D" opacity="0.4" transform="rotate(-10,143,177)"/>
+  <!-- 雨/碎片 -->
+  <text x="45" y="110" fill="#FFD700" font-size="6" opacity="0.4">✦</text>
+  <text x="150" y="105" fill="#FFD700" font-size="5" opacity="0.3">✦</text>
+  
+  <!-- 底部标签 -->
+  <rect x="0" y="260" width="200" height="60" rx="0" fill="rgba(0,0,0,0.5)"/>
+  <rect x="10" y="262" width="180" height="56" rx="5" fill="rgba(0,0,0,0.3)"/>
+  <text x="100.0" y="282" text-anchor="middle" fill="#d4af37" font-size="11" font-family="serif" font-weight="bold">No.16 · 大阿卡纳</text>
+  <text x="100.0" y="300" text-anchor="middle" fill="#f5d77a" font-size="14" font-family="serif" font-weight="bold">塔 · The Tower</text>
+</svg>
