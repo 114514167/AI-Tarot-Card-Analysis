@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>塔罗牌占卜</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <!-- ============================================================
+         移动端菜单按钮
+         在手机上点击可以打开/关闭侧边栏
+         ============================================================ -->
+    <button class="menu-toggle" onclick="toggleSidebar()">&#9776;</button>
+
+    <!-- ============================================================
+         左侧历史会话边栏
+         显示过去的所有占卜会话，点击可查看和继续对话
+         ============================================================ -->
+    <div class="sidebar" id="sidebar">
+        <!-- 边栏标题 -->
+        <div class="sidebar-header">
+            <span class="sidebar-title">历史会话</span>
+            <button class="btn-new-session" onclick="startNewSession()">+ 新占卜</button>
+        </div>
+
+        <!-- 历史会话列表(通过JavaScript动态填充) -->
+        <div class="session-list" id="session-list">
+            <!-- 这里的内容会被JavaScript动态生成 -->
+        </div>
+
+        <!-- 边栏底部统计 -->
+        <div class="sidebar-footer" id="sidebar-footer">
+            共 0 次占卜
+        </div>
+    </div>
+
+    <!-- ============================================================
+         主内容区域
+         ============================================================ -->
+    <div class="main-content">
+        <div class="container">
+
+            <!-- ========================================================
+                 界面1: 欢迎页面
+                 ======================================================== -->
+            <div id="welcome-screen" class="screen active">
+                <h1 class="title">塔罗牌占卜</h1>
+                <p class="subtitle">探索命运的指引</p>
+                <p class="instruction">
+                    选择一种牌阵，开始你的塔罗之旅。<br>
+                    点击牌面翻开，输入你的问题，让塔罗为你解读。
+                </p>
+                <button class="btn" onclick="selectSpread('triple')">
+                    三牌阵 - 过去 / 现在 / 未来
+                </button>
+                <button class="btn" onclick="selectSpread('single')">
+                    单牌占卜
+                </button>
+            </div>
+
+            <!-- ========================================================
+                 界面2: 抽牌页面
+                 ======================================================== -->
+            <div id="card-screen" class="screen">
+                <p class="flip-hint">点击牌面翻开</p>
+                <div id="cards-container" class="cards-container"></div>
+
+                <!-- 问题输入区域 -->
+                <div id="question-section" class="question-section">
+                    <p class="question-label">请选择你想了解的方面:</p>
+                    <div class="preset-questions">
+                        <button class="preset-btn" onclick="setQuestion('姻缘')">姻缘</button>
+                        <button class="preset-btn" onclick="setQuestion('学业')">学业</button>
+                        <button class="preset-btn" onclick="setQuestion('事业')">事业</button>
+                        <button class="preset-btn" onclick="setQuestion('财运')">财运</button>
+                        <button class="preset-btn" onclick="setQuestion('健康')">健康</button>
+                        <button class="preset-btn" onclick="setQuestion('综合运势')">综合运势</button>
+                    </div>
+                    <input type="text" id="question-input" class="question-input"
+                           placeholder="或者输入你的具体问题...">
+                    <button class="btn-primary" onclick="startReading()">开始解读</button>
+                </div>
+            </div>
+
+            <!-- ========================================================
+                 界面3: 结果页面
+                 包含: 牌面展示、AI解读、对话历史、追问功能
+                 ======================================================== -->
+            <div id="result-screen" class="screen">
+                <h2 style="color: #d4af37; margin-bottom: 20px;">塔罗牌解读</h2>
+
+                <!-- 小牌面展示 -->
+                <div id="result-cards" class="result-cards"></div>
+
+                <!-- 对话历史(包含初次解读和后续追问) -->
+                <div id="chat-history" class="chat-history"></div>
+
+                <!-- 追问输入区域 -->
+                <div class="follow-up-section">
+                    <p class="follow-up-label">还想了解更多？继续提问吧：</p>
+                    <div class="follow-up-row">
+                        <input type="text" id="follow-up-input" class="follow-up-input"
+                               placeholder="例如：这件事什么时候会有结果？"
+                               onkeydown="if(event.key==='Enter')sendFollowUp()">
+                        <button class="follow-up-btn" onclick="sendFollowUp()">发送</button>
+                    </div>
+                </div>
+
+                <!-- 底部按钮 -->
+                <div style="margin-top: 30px;">
+                    <button class="btn" onclick="startNewSession()">重新占卜</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         Loading 加载遮罩层
+         ============================================================ -->
+    <div id="loading" class="loading-overlay">
+        <div class="spinner"></div>
+        <p class="loading-text">命运之轮转动中...</p>
+    </div>
+
+    <!-- ============================================================
+         JavaScript 代码
+         所有的交互逻辑都在这里
+         ============================================================ -->
+    <script>
+    // ============================================================
+    // 全局状态管理
+    // gameState 存储当前会话的所有信息
+    // ============================================================
+    let gameState = {
+        sessionId: null,       // 当前会话的ID(从后端获取)
+        spread: null,          // 牌阵类型
+        drawnCards: [],        // 抽到的牌
+        flippedCount: 0,       // 已翻开的牌数
+        chatMessages: []       // 对话消息列表(追问+回答)
+    };
+
+    // ============================================================
+    // 页面加载完成后执行
+    // DOMContentLoaded: 当HTML解析完成时触发
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', function() {
+        loadSessionList();  // 加载历史会话列表
+    });
+
+    // ============================================================
+    // 侧边栏相关函数
+    // ============================================================
+
+    // 切换侧边栏显示/隐藏(手机端)
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('open');
+    }
+
+    // ============================================================
+    // 会话管理函数
+    // ============================================================
+
+    // 从后端加载历史会话列表
+    async function loadSessionList() {
+        try {
+            const response = await fetch('/api/sessions');
+            const data = await response.json();
+            renderSessionList(data.sessions);
+        } catch (error) {
+            console.error('加载会话列表失败:', error);
+        }
+    }
+
+    // 在侧边栏中渲染会话列表
+    function renderSessionList(sessions) {
+        const listEl = document.getElementById('session-list');
+        const footerEl = document.getElementById('sidebar-footer');
+
+        // 如果没有历史会话
+        if (!sessions || sessions.length === 0) {
+            listEl.innerHTML = '<p style="color: #6a5a4a; padding: 20px; text-align: center;">暂无历史会话</p>';
+            footerEl.textContent = '共 0 次占卜';
+            return;
+        }
+
+        // 生成每个会话项的HTML
+        let html = '';
+        sessions.forEach(session => {
+            // 判断是否是当前选中的会话
+            const isActive = gameState.sessionId === session.id ? 'active' : '';
+
+            html += `
+                <div class="session-item ${isActive}" onclick="loadSession(${session.id})">
+                    <button class="session-delete" onclick="event.stopPropagation(); deleteSession(${session.id})" title="删除">x</button>
+                    <div class="session-summary">${session.summary || '塔罗占卜'}</div>
+                    <div class="session-time">${session.created_at}</div>
+                </div>
+            `;
+        });
+
+        listEl.innerHTML = html;
+        footerEl.textContent = `共 ${sessions.length} 次占卜`;
+    }
+
+    // 加载指定会话的详情
+    async function loadSession(sessionId) {
+        try {
+            showLoading();
+            const response = await fetch(`/api/sessions/${sessionId}`);
+            const data = await response.json();
+            hideLoading();
+
+            // 更新游戏状态
+            gameState.sessionId = sessionId;
+            gameState.spread = data.session.spread_type;
+            gameState.drawnCards = data.session.cards_data || [];
+            gameState.chatMessages = data.messages || [];
+
+            // 切换到结果页面
+            showScreen('result-screen');
+
+            // 渲染小牌面
+            renderResultCards();
+
+            // 渲染对话历史
+            renderChatHistory();
+
+            // 更新侧边栏选中状态
+            loadSessionList();
+        } catch (error) {
+            hideLoading();
+            console.error('加载会话失败:', error);
+            alert('加载会话失败');
+        }
+    }
+
+    // 删除一个会话
+    async function deleteSession(sessionId) {
+        if (!confirm('确定要删除这个会话吗？')) return;
+
+        try {
+            await fetch(`/api/sessions/${sessionId}`, { method: 'DELETE' });
+            // 如果删除的是当前会话，回到欢迎页面
+            if (gameState.sessionId === sessionId) {
+                resetGameState();
+                showScreen('welcome-screen');
+            }
+            loadSessionList();
+        } catch (error) {
+            console.error('删除会话失败:', error);
+        }
+    }
+
+    // 开始新的占卜(重置状态)
+    function startNewSession() {
+        resetGameState();
+        showScreen('welcome-screen');
+        loadSessionList();
+    }
+
+    // 重置游戏状态
+    function resetGameState() {
+        gameState = {
+            sessionId: null,
+            spread: null,
+            drawnCards: [],
+            flippedCount: 0,
+            chatMessages: []
+        };
+        document.getElementById('question-input').value = '';
+        document.getElementById('question-section').classList.remove('visible');
+        document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+    }
+
+    // ============================================================
+    // 牌阵选择和抽牌
+    // ============================================================
+
+    function selectSpread(type) {
+        gameState.spread = type;
+        showScreen('card-screen');
+        fetchCards();
+    }
+
+    async function fetchCards() {
+        try {
+            const response = await fetch(`/api/draw?spread=${gameState.spread}`);
+            const data = await response.json();
+            gameState.drawnCards = data.cards;
+            renderCards();
+        } catch (error) {
+            alert('获取牌面失败，请刷新页面重试');
+            console.error('获取牌面失败:', error);
+        }
+    }
+
+    // ============================================================
+    // 渲染卡牌(大卡牌 + 独特卡面设计)
+    // ============================================================
+
+    // 每张牌对应的Unicode符号(装饰用)
+    const cardSymbols = [
+        '☆',  // 0 愚者
+        '☿',  // 1 魔术师
+        '☽',  // 2 女祭司
+        '♀',  // 3 皇后
+        '♂',  // 4 皇帝
+        '✝',  // 5 教皇
+        '♡',  // 6 恋人
+        '⊕',  // 7 战车
+        '♌',  // 8 力量
+        '⚷',  // 9 隐士
+        '☉',  // 10 命运之轮
+        '♎',  // 11 正义
+        '☋',  // 12 倒吊人
+        '☠',  // 13 死神
+        '♊',  // 14 节制
+        '⛧',  // 15 恶魔
+        '⚡',  // 16 塔
+        '★',  // 17 星星
+        '◐',  // 18 月亮
+        '☀',  // 19 太阳
+        '⚘',  // 20 审判
+        '✿',  // 21 世界
+    ];
+
+    function renderCards() {
+        const container = document.getElementById('cards-container');
+        container.innerHTML = '';
+        gameState.flippedCount = 0;
+
+        gameState.drawnCards.forEach((card, index) => {
+            const symbol = cardSymbols[card.id] || '✦';
+            const posText = card.position === 'upright' ? '正位' : '逆位';
+
+            const cardHTML = `
+                <div class="card" onclick="flipCard(${index})">
+                    <div class="card-inner" id="card-inner-${index}">
+                        <!-- 牌背面 -->
+                        <div class="card-back">
+                            <div class="card-back-border"></div>
+                            <div class="card-back-corner top-left"></div>
+                            <div class="card-back-corner top-right"></div>
+                            <div class="card-back-corner bottom-left"></div>
+                            <div class="card-back-corner bottom-right"></div>
+                            <div class="card-back-symbol">✦</div>
+                        </div>
+                        <!-- 牌正面(独特设计) -->
+                        <div class="card-front">
+                            <div class="card-number-bar">No.${card.id} · 大阿卡纳</div>
+                            <div class="card-art card-art-${card.id}">
+                                <div class="card-symbol">${symbol}</div>
+                            </div>
+                            <div class="card-info">
+                                <div class="card-name">${card.name_cn}</div>
+                                <div class="card-name-en">${card.name_en}</div>
+                                <div class="card-position ${card.position}">${posText}</div>
+                                <div class="card-keywords">${card.keywords.join(' · ')}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += cardHTML;
+        });
+    }
+
+    function flipCard(index) {
+        const cardInner = document.getElementById(`card-inner-${index}`);
+        if (cardInner.classList.contains('flipped')) return;
+
+        cardInner.classList.add('flipped');
+        gameState.flippedCount++;
+
+        if (gameState.flippedCount >= gameState.drawnCards.length) {
+            setTimeout(showQuestionForm, 500);
+        }
+    }
+
+    function showQuestionForm() {
+        document.getElementById('question-section').classList.add('visible');
+    }
+
+    function setQuestion(text) {
+        document.getElementById('question-input').value = text;
+        document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+
+    // ============================================================
+    // 开始解读(第一次提问)
+    // ============================================================
+
+    async function startReading() {
+        const questionInput = document.getElementById('question-input');
+        const question = questionInput.value.trim();
+
+        if (!question) {
+            alert('请输入你的问题，或选择一个预设问题');
+            return;
+        }
+
+        showLoading();
+
+        try {
+            const response = await fetch('/api/reading', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    cards: gameState.drawnCards,
+                    question: question,
+                    spread: gameState.spread
+                })
+            });
+
+            const data = await response.json();
+            hideLoading();
+
+            if (data.error) {
+                alert('解读失败: ' + data.error);
+                return;
+            }
+
+            // 保存会话ID
+            gameState.sessionId = data.session_id;
+
+            // 添加到对话消息
+            gameState.chatMessages = [
+                { role: 'user', content: question, question_type: data.question_type || '' },
+                { role: 'assistant', content: data.reading }
+            ];
+
+            // 切换到结果页面
+            showScreen('result-screen');
+
+            // 渲染小牌面
+            renderResultCards();
+
+            // 渲染对话历史
+            renderChatHistory();
+
+            // 刷新侧边栏会话列表
+            loadSessionList();
+
+        } catch (error) {
+            hideLoading();
+            alert('网络错误，请检查后端服务是否启动');
+            console.error('解读请求失败:', error);
+        }
+    }
+
+    // ============================================================
+    // 追问功能(连续提问)
+    // ============================================================
+
+    async function sendFollowUp() {
+        const input = document.getElementById('follow-up-input');
+        const question = input.value.trim();
+
+        if (!question) return;
+        if (!gameState.sessionId) {
+            alert('请先进行一次占卜');
+            return;
+        }
+
+        // 清空输入框
+        input.value = '';
+
+        // 先在界面上显示用户的问题
+        gameState.chatMessages.push({ role: 'user', content: question });
+        renderChatHistory();
+
+        showLoading();
+
+        try {
+            const response = await fetch('/api/follow-up', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    session_id: gameState.sessionId,
+                    question: question
+                })
+            });
+
+            const data = await response.json();
+            hideLoading();
+
+            if (data.error) {
+                alert('追问失败: ' + data.error);
+                return;
+            }
+
+            // 添加AI回复到对话历史
+            gameState.chatMessages.push({ role: 'assistant', content: data.reply });
+
+            // 重新渲染对话历史
+            renderChatHistory();
+
+            // 滚动到最新消息
+            scrollToBottom();
+
+        } catch (error) {
+            hideLoading();
+            alert('网络错误');
+            console.error('追问失败:', error);
+        }
+    }
+
+    // ============================================================
+    // 渲染结果页面
+    // ============================================================
+
+    // 渲染小牌面
+    function renderResultCards() {
+        const resultCards = document.getElementById('result-cards');
+        resultCards.innerHTML = '';
+
+        gameState.drawnCards.forEach(card => {
+            const posText = card.position === 'upright' ? '正位' : '逆位';
+            const symbol = cardSymbols[card.id] || '✦';
+
+            resultCards.innerHTML += `
+                <div class="result-card">
+                    <div class="result-card-face">
+                        <div class="result-card-symbol">${symbol}</div>
+                        <div class="result-card-name">${card.name_cn}</div>
+                        <div class="result-card-position ${card.position}">${posText}</div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    // 渲染对话历史(支持分段显示)
+    function renderChatHistory() {
+        const chatEl = document.getElementById('chat-history');
+        let html = '';
+
+        gameState.chatMessages.forEach(msg => {
+            const roleText = msg.role === 'user' ? '你的问题' : '塔罗解读';
+            const roleClass = msg.role;
+
+            // 将AI回复按换行符分段，用<p>标签包裹
+            let contentHtml = '';
+            if (msg.role === 'assistant') {
+                // 按照两个换行符分段(即空行分隔的段落)
+                const paragraphs = msg.content.split(/\n\s*\n/).filter(p => p.trim());
+                contentHtml = paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
+            } else {
+                contentHtml = `<p>${msg.content}</p>`;
+            }
+
+            html += `
+                <div class="chat-message ${roleClass}">
+                    <div class="chat-role">${roleText}</div>
+                    <div class="chat-content">${contentHtml}</div>
+                </div>
+            `;
+        });
+
+        chatEl.innerHTML = html;
+    }
+
+    // 滚动到页面底部(查看最新消息)
+    function scrollToBottom() {
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+        });
+    }
+
+    // ============================================================
+    // 界面切换
+    // ============================================================
+
+    function showScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(screen => {
+            screen.classList.remove('active');
+        });
+        document.getElementById(screenId).classList.add('active');
+    }
+
+    function showLoading() {
+        document.getElementById('loading').classList.add('active');
+    }
+
+    function hideLoading() {
+        document.getElementById('loading').classList.remove('active');
+    }
+    </script>
+</body>
+</html>

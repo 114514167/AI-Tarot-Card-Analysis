@@ -1,0 +1,16 @@
+# ============================================================
+# Python 依赖包列表
+# 运行 pip install -r requirements.txt 来安装所有依赖
+# ============================================================
+
+# Flask: 轻量级Web框架，用来创建网站和API
+flask>=3.0
+
+# anthropic: Anthropic公司的Python SDK，用来调用Claude AI
+anthropic>=0.40.0
+
+# python-dotenv: 从.env文件加载环境变量(如API密钥、数据库密码)
+python-dotenv>=1.0
+
+# PyMySQL: Python连接MySQL数据库的驱动
+pymysql>=1.1
